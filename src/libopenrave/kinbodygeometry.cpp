@@ -431,32 +431,14 @@ bool KinBody::GeometryInfo::ComputeInnerEmptyVolume(Transform& tInnerEmptyVolume
     }
 }
 
-void RaveSerializeJSON(rapidjson::Value &rSideWall, rapidjson::Document::AllocatorType& allocator, const KinBody::GeometryInfo::SideWall& sidewall)
-{
-    RAVE_SERIALIZEJSON_ENSURE_OBJECT(rSideWall);
-    RAVE_SERIALIZEJSON_ADDMEMBER(rSideWall, allocator, "transform", sidewall.transf);
-    RAVE_SERIALIZEJSON_ADDMEMBER(rSideWall, allocator, "halfExtents", sidewall.vExtents);
-    RAVE_SERIALIZEJSON_ADDMEMBER(rSideWall, allocator, "type", (int)sidewall.type);
-}
-
-void RaveDeserializeJSON(const rapidjson::Value &value, KinBody::GeometryInfo::SideWall& sidewall)
-{
-    RAVE_DESERIALIZEJSON_ENSURE_OBJECT(value);
-    RAVE_DESERIALIZEJSON_REQUIRED(value, "transform", sidewall.transf);
-    RAVE_DESERIALIZEJSON_REQUIRED(value, "halfExtents", sidewall.vExtents);
-    int type=0;
-    RAVE_DESERIALIZEJSON_REQUIRED(value, "type", type);
-    sidewall.type = (KinBody::GeometryInfo::SideWallType)type;
-}
-
 void KinBody::GeometryInfo::SerializeJSON(rapidjson::Value &value, rapidjson::Document::AllocatorType& allocator, const dReal fUnitScale, int options)
 {
     RAVE_SERIALIZEJSON_ENSURE_OBJECT(value);
 
-    //RAVE_SERIALIZEJSON_ADDMEMBER(value, allocator, "sid", sid);
+    // RAVE_SERIALIZEJSON_ADDMEMBER(value, allocator, "sid", sid);
     RAVE_SERIALIZEJSON_ADDMEMBER(value, allocator, "name", _name);
 
-    Transform tscaled=_t;
+    Transform tscaled = _t;
     tscaled.trans *= fUnitScale;
     RAVE_SERIALIZEJSON_ADDMEMBER(value, allocator, "transform", tscaled);
 
@@ -522,11 +504,11 @@ void KinBody::GeometryInfo::SerializeJSON(rapidjson::Value &value, rapidjson::Do
     RAVE_SERIALIZEJSON_ADDMEMBER(value, allocator, "modifiable", _bModifiable);
 }
 
+
 void KinBody::GeometryInfo::DeserializeJSON(const rapidjson::Value &value, const dReal fUnitScale)
 {
     RAVE_DESERIALIZEJSON_ENSURE_OBJECT(value);
 
-    //RAVE_DESERIALIZEJSON_REQUIRED(value, "sid", sid);
     RAVE_DESERIALIZEJSON_REQUIRED(value, "name", _name);
     RAVE_DESERIALIZEJSON_REQUIRED(value, "transform", _t);
 
@@ -605,6 +587,26 @@ void KinBody::GeometryInfo::DeserializeJSON(const rapidjson::Value &value, const
     RAVE_DESERIALIZEJSON_REQUIRED(value, "diffuseColor", _vDiffuseColor);
     RAVE_DESERIALIZEJSON_REQUIRED(value, "ambientColor", _vAmbientColor);
     RAVE_DESERIALIZEJSON_REQUIRED(value, "modifiable", _bModifiable);
+}
+
+
+
+void RaveSerializeJSON(rapidjson::Value &rSideWall, rapidjson::Document::AllocatorType& allocator, const KinBody::GeometryInfo::SideWall& sidewall)
+{
+    RAVE_SERIALIZEJSON_ENSURE_OBJECT(rSideWall);
+    RAVE_SERIALIZEJSON_ADDMEMBER(rSideWall, allocator, "transform", sidewall.transf);
+    RAVE_SERIALIZEJSON_ADDMEMBER(rSideWall, allocator, "halfExtents", sidewall.vExtents);
+    RAVE_SERIALIZEJSON_ADDMEMBER(rSideWall, allocator, "type", (int)sidewall.type);
+}
+
+void RaveDeserializeJSON(const rapidjson::Value &value, KinBody::GeometryInfo::SideWall& sidewall)
+{
+    RAVE_DESERIALIZEJSON_ENSURE_OBJECT(value);
+    RAVE_DESERIALIZEJSON_REQUIRED(value, "transform", sidewall.transf);
+    RAVE_DESERIALIZEJSON_REQUIRED(value, "halfExtents", sidewall.vExtents);
+    int type=0;
+    RAVE_DESERIALIZEJSON_REQUIRED(value, "type", type);
+    sidewall.type = (KinBody::GeometryInfo::SideWallType)type;
 }
 
 AABB KinBody::GeometryInfo::ComputeAABB(const Transform& tGeometryWorld) const

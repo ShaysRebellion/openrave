@@ -80,6 +80,53 @@ ElectricMotorActuatorInfo::ElectricMotorActuatorInfo()
     viscous_friction = 0;
 }
 
+
+void ElectricMotorActuatorInfo::SerializeJSON(rapidjson::Value& value, rapidjson::Document::AllocatorType& allocator, int options) const
+{
+    RAVE_SERIALIZEJSON_ENSURE_OBJECT(value);
+    RAVE_SERIALIZEJSON_ADDMEMBER(value, allocator, "modelType", model_type);
+    RAVE_SERIALIZEJSON_ADDMEMBER(value, allocator, "assignedPowerRating", assigned_power_rating);
+    RAVE_SERIALIZEJSON_ADDMEMBER(value, allocator, "maxSpeed", max_speed);
+    RAVE_SERIALIZEJSON_ADDMEMBER(value, allocator, "noLoadSpeed", no_load_speed);
+    RAVE_SERIALIZEJSON_ADDMEMBER(value, allocator, "stallTorque", stall_torque);
+    RAVE_SERIALIZEJSON_ADDMEMBER(value, allocator, "maxInstantaneousTorque", max_instantaneous_torque);
+    RAVE_SERIALIZEJSON_ADDMEMBER(value, allocator, "nominalSpeedTorquePoints", nominal_speed_torque_points);
+    RAVE_SERIALIZEJSON_ADDMEMBER(value, allocator, "maxSpeedTorquePoints", max_speed_torque_points);
+    RAVE_SERIALIZEJSON_ADDMEMBER(value, allocator, "nominalTorque", nominal_torque);
+    RAVE_SERIALIZEJSON_ADDMEMBER(value, allocator, "rotorInertia", rotor_inertia);
+    RAVE_SERIALIZEJSON_ADDMEMBER(value, allocator, "torqueConstant", torque_constant);
+    RAVE_SERIALIZEJSON_ADDMEMBER(value, allocator, "nominalVoltage", nominal_voltage);
+    RAVE_SERIALIZEJSON_ADDMEMBER(value, allocator, "speedConstant", speed_constant);
+    RAVE_SERIALIZEJSON_ADDMEMBER(value, allocator, "startingCurrent", starting_current);
+    RAVE_SERIALIZEJSON_ADDMEMBER(value, allocator, "terminalResistance", terminal_resistance);
+    RAVE_SERIALIZEJSON_ADDMEMBER(value, allocator, "gearRatio", gear_ratio);
+    RAVE_SERIALIZEJSON_ADDMEMBER(value, allocator, "coloumbFriction", coloumb_friction);
+    RAVE_SERIALIZEJSON_ADDMEMBER(value, allocator, "viscousFriction", viscous_friction);
+}
+
+void ElectricMotorActuatorInfo::DeserializeJSON(const rapidjson::Value& value, EnvironmentBasePtr penv)
+{
+    RAVE_DESERIALIZEJSON_ENSURE_OBJECT(value);
+    RAVE_DESERIALIZEJSON_REQUIRED(value, "modelType", model_type);
+    RAVE_DESERIALIZEJSON_REQUIRED(value, "assignedPowerRating", assigned_power_rating);
+    RAVE_DESERIALIZEJSON_REQUIRED(value, "maxSpeed", max_speed);
+    RAVE_DESERIALIZEJSON_REQUIRED(value, "noLoadSpeed", no_load_speed);
+    RAVE_DESERIALIZEJSON_REQUIRED(value, "stallTorque", stall_torque);
+    RAVE_DESERIALIZEJSON_REQUIRED(value, "maxInstantaneousTorque", max_instantaneous_torque);
+    RAVE_DESERIALIZEJSON_REQUIRED(value, "nominalSpeedTorquePoints", nominal_speed_torque_points);
+    RAVE_DESERIALIZEJSON_REQUIRED(value, "maxSpeedTorquePoints", max_speed_torque_points);
+    RAVE_DESERIALIZEJSON_REQUIRED(value, "nominalTorque", nominal_torque);
+    RAVE_DESERIALIZEJSON_REQUIRED(value, "rotorInertia", rotor_inertia);
+    RAVE_DESERIALIZEJSON_REQUIRED(value, "torqueConstant", torque_constant);
+    RAVE_DESERIALIZEJSON_REQUIRED(value, "nominalVoltage", nominal_voltage);
+    RAVE_DESERIALIZEJSON_REQUIRED(value, "speedConstant", speed_constant);
+    RAVE_DESERIALIZEJSON_REQUIRED(value, "startingCurrent", starting_current);
+    RAVE_DESERIALIZEJSON_REQUIRED(value, "terminalResistance", terminal_resistance);
+    RAVE_DESERIALIZEJSON_REQUIRED(value, "gearRatio", gear_ratio);
+    RAVE_DESERIALIZEJSON_REQUIRED(value, "coloumbFriction", coloumb_friction);
+    RAVE_DESERIALIZEJSON_REQUIRED(value, "viscousFriction", viscous_friction);
+}
+
 KinBody::KinBody(InterfaceType type, EnvironmentBasePtr penv) : InterfaceBase(type, penv)
 {
     _nHierarchyComputed = 0;
